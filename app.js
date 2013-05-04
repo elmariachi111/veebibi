@@ -7,19 +7,18 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-    ,mongoskin = require('mongoskin')
   ,Services = require('./routes/services')
     ,EJSpartials = require('express-partials')
   , path = require('path');
 
-var app = express();
-if (!process.env.MONGOLAB_URI) {
-    //for those without foreman
-    //DONT DO THIS AT HOME!!!!!!!!
-    process.env.MONGOLAB_URI = 'mongodb://heroku_app15480966:fsg7rb9jvvj2m0b5q6ra3f5f5u@ds061757.mongolab.com:61757/heroku_app15480966';
-}
 
-var mongo = mongoskin.db(process.env.MONGOLAB_URI + "?auto_reconnect=true&poolSize=2", {w:1});
+if (!process.env.NODB){
+  var mongoskin = require('mongoskin')
+  var mongo = mongoskin.db(process.env.MONGOLAB_URI + "?auto_reconnect=true&poolSize=2", {w:1});
+}
+var app = express();
+
+
 // all environments
 
 app.set('port', process.env.PORT || 5000);
