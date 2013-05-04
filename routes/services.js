@@ -12,7 +12,7 @@ var Twitter = require('twitter');
 exports.twitterSearch = function(req, res) {
     var twit = new Twitter();
 
-    twit.search('nodejs OR #node', function(data) {
+    twit.search('berlin OR #berlin', function(data) {
         res.json(data);
     });
 }
