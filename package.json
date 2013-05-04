@@ -9,6 +9,8 @@
     "twitter": "latest",
     "express": "3.2.2",
     "ejs": "*",
+    "express-partials":"latest",
     "mongoskin":"latest"
+
   }
 }

@@ -16,3 +16,7 @@ exports.twitterSearch = function(req, res) {
     });
 }
 
+exports.position = function(req, res) {
+    res.render("gpspos",{title:'Oh hai'});
+}
+
