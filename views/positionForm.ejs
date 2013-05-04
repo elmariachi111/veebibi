@@ -1,0 +1,19 @@
+<button id="geobutton">
+getPosition
+</button>
+
+        <div> your pos: <span id="posResult"></span></div>
+<script type="text/javascript">
+    var loc = new VB.BrowserLocation();
+
+    $( function() {
+        $('#geobutton').on('click', function(evt) {
+            loc.getNavigatorLocation(function(pos) {
+                var latlng = { lat:pos.coords.latitude, lng: pos.coords.longitude };
+                $('#posResult').html(latlng.lat + " " + latlng.lng );
+            })
+        });
+    })
+
+
+</script>

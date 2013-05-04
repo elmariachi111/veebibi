@@ -17,13 +17,18 @@ exports.twitterSearch = function(req, res) {
     });
 }
 
+
+exports.positionForm = function(req,res) {
+    res.render("positionForm", {title:"schniepel"});
+}
+
 /**
  * @return a bus line entity that comes with
  * GPS positions for all stops
  * @param req
  * @param res
  */
-exports.position = function(req, res) {
+exports.postPosition = function(req, res) {
     var dummy = [
         {lat:52.516012,lng:13.418126},
         {lat:52.525204,lng:13.420186},

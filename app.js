@@ -5,7 +5,6 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   ,Services = require('./routes/services')
     ,EJSpartials = require('express-partials')
@@ -43,7 +42,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/twitter-search', Services.twitterSearch);
-app.get('/position', Services.position);
+app.get('/position', Services.positionForm);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
