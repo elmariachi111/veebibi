@@ -10,8 +10,9 @@ var Twitter = require('twitter');
 
 exports.twitterSearch = function(req, res) {
     var twit = new Twitter();
+//54.036022,10.447311,25mi
 
-    twit.search('berlin OR #berlin', function(data) {
+    twit.search('pizza', {geocode: '54.036022,10.447311,25mi' },function(data) {
         res.json(data);
     });
 }
