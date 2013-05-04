@@ -7,15 +7,21 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
+    ,mongoskin = require('mongoskin')
   ,Services = require('./routes/services')
+    ,EJSpartials = require('express-partials')
   , path = require('path');
 
 var app = express();
-
+var mongo = mongoskin.db(process.env.MONGOLAB_URI + "?auto_reconnect=true&poolSize=2", {w:1});
 // all environments
+
 app.set('port', process.env.PORT || 5000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.set('layout', 'stdLayout'); // defaults to 'layout'
+app.use(EJSpartials());
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -26,16 +32,15 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
 app.get('/', routes.index);
-app.post('/position', routes.position);
 app.get('/users', user.list);
 app.get('/twitter-search', Services.twitterSearch);
+app.get('/position', Services.position);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
