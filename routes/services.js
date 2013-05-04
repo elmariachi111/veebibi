@@ -42,7 +42,7 @@ exports.position = function(req, res) {
         {lat:52.515672,lng:13.414907},
         {lat:52.515633,lng:13.418083}
     ];
-
+    res.send(dummy);
     //res.render("gpspos",{title:'Oh hai'});
 }
 
