@@ -11,13 +11,12 @@ var express = require('express')
     ,EJSpartials = require('express-partials')
   , path = require('path');
 
-
+var mongo;
 if (!process.env.NODB){
   var mongoskin = require('mongoskin')
-  var mongo = mongoskin.db(process.env.MONGOLAB_URI + "?auto_reconnect=true&poolSize=2", {w:1});
+  mongo = mongoskin.db(process.env.MONGOLAB_URI + "?auto_reconnect=true&poolSize=2", {w:1});
 }
 var app = express();
-
 
 // all environments
 
