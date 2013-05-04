@@ -7,6 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
+  ,Services = require('./routes/services')
   , path = require('path');
 
 var app = express();
@@ -24,6 +25,8 @@ app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
 // development only
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
@@ -31,6 +34,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/twitter-search', Services.twitterSearch);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
