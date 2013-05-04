@@ -8,6 +8,7 @@
   "dependencies": {
     "twitter": "latest",
     "express": "3.2.2",
-    "ejs": "*"
+    "ejs": "*",
+    "mongoskin":"latest"
   }
 }

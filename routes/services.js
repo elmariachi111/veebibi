@@ -8,7 +8,6 @@
 
 var Twitter = require('twitter');
 
-
 exports.twitterSearch = function(req, res) {
     var twit = new Twitter();
 

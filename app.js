@@ -7,11 +7,12 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
+    ,mongoskin = require('mongoskin')
   ,Services = require('./routes/services')
   , path = require('path');
 
 var app = express();
-
+var mongo = mongoskin.db(process.env.MONGOLAB_URI);
 // all environments
 app.set('port', process.env.PORT || 5000);
 app.set('views', __dirname + '/views');
