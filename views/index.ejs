@@ -112,63 +112,8 @@
 
     <script type="text/javascript">
 
-        var gmap;
-        var polyLines = [];
-        var markers = [];
-
         var gpsSvc = new VB.BrowserLocation();
-        var locator = new VB.StationLocator();
-        var colors = [
-            '#E8400C',
-            '#FFAB25',
-            '#FF0082',
-            '#830CE8',
-            '#0935FF'
-        ];
-
-        var onMapClicked = function(e) {
-            _.each(polyLines, function(pl) {
-                pl.setMap(null);
-                pl = null;
-            })
-            _.each(markers, function(m) {
-                m.setMap(null);
-                m = null;
-            })
-
-            var latlng = { lat:e.latLng.lat(), lng: e.latLng.lng() };
-            locator.findLines(latlng, function(lines) {
-
-                console.dir(lines);
-
-                var polyOptions = {
-                    strokeOpacity: 1.0,
-                    strokeWeight: 3
-                };
-                _.each(lines, function(line) {
-                    polyOptions.strokeColor = colors[_.random(colors.length)];
-                    var poly = new google.maps.Polyline(polyOptions);
-                    poly.vbbLine = line;
-                    google.maps.event.addListener(poly,'click', function(e) {
-                        alert(this.vbbLine.line);
-                    });
-                    polyLines.push(poly);
-                    poly.setMap(gmap);
-                    var path = poly.getPath();
-                    _.each(line.stations, function(station) {
-                        var latLng = new google.maps.LatLng(station.loc.lat, station.loc.lng);
-                        path.push(latLng);
-
-                        var marker = new google.maps.Marker({
-                            position: latLng,
-                            map: gmap,
-                            title:"[" + line.line + "] " + station.name
-                        });
-
-                    });
-                });
-            });
-        };
+        var frontend;
 
         function initialize() { //called back from google loader
             var mapOptions = {
@@ -177,9 +122,9 @@
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
 
-            gmap = new google.maps.Map(document.getElementById("themap"), mapOptions);
+            var gmap = new google.maps.Map(document.getElementById("themap"), mapOptions);
+            frontend = new VB.Frontend(gmap);
         }
-
         google.maps.event.addDomListener(window, 'load', initialize);
 
         $( function() {
@@ -187,10 +132,8 @@
             $('#btn-start').on('click', function(evt) {
                 gpsSvc.getNavigatorLocation(function(pos) {
                     var gmPos = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-                    gmap.setCenter(gmPos);
-                    gmap.setZoom(16);
-                    google.maps.event.addListener(gmap, 'click', onMapClicked);
                     $('#theWell').fadeOut('fast');
+                    frontend.start(gmPos);
                     //$('#posResult').html(latlng.lat + " " + latlng.lng );
                 })
             });
