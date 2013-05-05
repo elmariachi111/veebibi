@@ -162,6 +162,12 @@
                         var marker = new google.maps.Marker({
                             position: latLng,
                             map: gmap,
+                            flat:true,
+                            icon: {
+                                path: google.maps.SymbolPath.CIRCLE,
+                                scale: 3,
+                                strokeColor: polyOptions.strokeColor
+                            },
                             title:"[" + line.line + "] " + station.name
                         });
 
