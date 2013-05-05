@@ -1,16 +1,5 @@
-<html>
-<head>
-    <title></title>
-    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
 
-</head>
-
-<body>
-<!-- 
-<div id="themap" style="position:absolute; z-position:2;"></div> 
--->
 <div class="wrapper">
-
 
     <!-- Modal -->
     <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -83,9 +72,15 @@
     </div>
 
 
-    <div id="themap" style="position:absolute; z-index:1;"></div>
+    <div id="themap" style="position:absolute; z-index:2;"></div>
 
-    <div class="well" style="position:absolute; z-index:2;">
+    <div class="footer" style="position:absolute; z-index:1; bottom:20px;">
+        <p>
+            Copyright (c) 2013
+        </p>
+    </div>
+
+    <div id="theWell" class="well" style="position:absolute; z-index:2; left:20%;">
         <div class="page-header">
 
             <h1>
@@ -100,14 +95,11 @@
             <br>Demistify the confusing traveling routes and visualize them now for better travel experience.
 
         </p>
-        <a href='#' class='btn btn-block btn-large btn-danger'>CHECK OUT!</a>
+        <a href="#" id="btn-start" class="btn btn-block btn-large btn-danger">Check it out!</a>
     </div>
     <div class="push" ></div>
 </div>
 <div class="container-fluid" style="position:relative; z-index:3;">
-
-
-
 
     <p style="color:#FFFFFF;">
         © VeeBeBe 2013 | <a href="#myModal" data-toggle="modal">About us</a>
@@ -115,19 +107,94 @@
 </div>
 
 
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-x0JdV9GE1C39uo8cmI-LZ4vS5tuMZRM&amp;sensor=true">
+    </script>
 
+    <script type="text/javascript">
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-x0JdV9GE1C39uo8cmI-LZ4vS5tuMZRM&amp;sensor=true">
-</script><script type="text/javascript">
-    function initialize() {
-        var mapOptions = {
-            center: new google.maps.LatLng(-34.397, 150.644),
-            zoom: 8,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+        var gmap;
+        var polyLines = [];
+        var markers = [];
+
+        var gpsSvc = new VB.BrowserLocation();
+        var locator = new VB.StationLocator();
+        var colors = [
+            '#E8400C',
+            '#FFAB25',
+            '#FF0082',
+            '#830CE8',
+            '#0935FF'
+        ];
+
+        var onMapClicked = function(e) {
+            _.each(polyLines, function(pl) {
+                pl.setMap(null);
+                pl = null;
+            })
+            _.each(markers, function(m) {
+                m.setMap(null);
+                m = null;
+            })
+
+            var latlng = { lat:e.latLng.lat(), lng: e.latLng.lng() };
+            locator.findLines(latlng, function(lines) {
+
+                console.dir(lines);
+
+                var polyOptions = {
+                    strokeOpacity: 1.0,
+                    strokeWeight: 3
+                };
+                _.each(lines, function(line) {
+                    polyOptions.strokeColor = colors[_.random(colors.length)];
+                    var poly = new google.maps.Polyline(polyOptions);
+                    poly.vbbLine = line;
+                    google.maps.event.addListener(poly,'click', function(e) {
+                        alert(this.vbbLine.line);
+                    });
+                    polyLines.push(poly);
+                    poly.setMap(gmap);
+                    var path = poly.getPath();
+                    _.each(line.stations, function(station) {
+                        var latLng = new google.maps.LatLng(station.loc.lat, station.loc.lng);
+                        path.push(latLng);
+
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            map: gmap,
+                            title:"[" + line.line + "] " + station.name
+                        });
+
+                    });
+                });
+            });
         };
-        var map = new google.maps.Map(document.getElementById("themap"), mapOptions);
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-</body>
-</html>
+
+        function initialize() { //called back from google loader
+            var mapOptions = {
+                center: new google.maps.LatLng(52.516012,13.418126),
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            gmap = new google.maps.Map(document.getElementById("themap"), mapOptions);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+        $( function() {
+            var disable;
+            $('#btn-start').on('click', function(evt) {
+                gpsSvc.getNavigatorLocation(function(pos) {
+                    var gmPos = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                    gmap.setCenter(gmPos);
+                    gmap.setZoom(16);
+                    google.maps.event.addListener(gmap, 'click', onMapClicked);
+                    $('#theWell').fadeOut('fast');
+                    //$('#posResult').html(latlng.lat + " " + latlng.lng );
+                })
+            });
+        });
+
+
+    </script>
