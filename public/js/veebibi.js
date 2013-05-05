@@ -36,6 +36,8 @@ VB.Frontend = function (gmap) {
     this.gmap = gmap;
     this.polyLines = [];
     this.markers = [];
+    this.$backdrop = $('#mega-backdrop');
+    this.$indicator = $('#loading-indicator');
 
 }
 
@@ -49,12 +51,13 @@ VB.Frontend.COLORS =  [
 
 VB.Frontend.prototype = {
     start: function(gmPos) {
-
+        this.$backdrop.addClass("hide");
         this.gmap.setCenter(gmPos);
         this.gmap.setZoom(16);
 
         google.maps.event.addListener(this.gmap, 'click', this.onMapClicked.bind(this));
         this.locator = new VB.StationLocator();
+
     },
     createMarker: function(latLng, color,  line, station) {
         var marker = new google.maps.Marker({
@@ -71,6 +74,8 @@ VB.Frontend.prototype = {
         return marker;
      },
      onMapClicked: function(e) {
+         this.$backdrop.removeClass("hide");
+         this.$indicator.removeClass("hide");
         _.each(this.polyLines, function(pl) {
             pl.setMap(null);
             pl = null;
@@ -83,7 +88,8 @@ VB.Frontend.prototype = {
 
         var latlng = { lat:e.latLng.lat(), lng: e.latLng.lng() };
         this.locator.findLines(latlng, function(lines) {
-
+            self.$backdrop.addClass("hide");
+            self.$indicator.addClass("hide");
             console.dir(lines);
             var polyOptions = {
                 strokeOpacity: 1.0,
