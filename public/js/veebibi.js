@@ -43,13 +43,18 @@ VB.Frontend = function (gmap) {
 }
 
 VB.Frontend.COLORS =  [
-    '#E8400C',
-    '#FFAB25',
-    '#FF0082',
-    '#830CE8',
-    '#0935FF'
+    '#0BCBD4',
+    '#0057F6',
+    '#00EB5E',
+    '#48D40B',
+    '#EDE600',
+    '#D45B0B',
+    '#FFB214',
+    '#EB1300',
+    '#D40BAC',
+    '#7B00EC',
+    '#190000'
 ];
-
 VB.Frontend.prototype = {
     start: function(gmPos) {
         this.$backdrop.addClass("hide");
