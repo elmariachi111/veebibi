@@ -25,8 +25,8 @@ VB.StationLocator = function() {
 
 VB.StationLocator.prototype = {
 
-    findStation: function(jsLatLng, callback) {
-        $.get('/findline', jsLatLng, function(resp) {
+    findLines: function(jsLatLng, callback) {
+        $.get('/findlines', jsLatLng, function(resp) {
             callback(resp);
         });
     }

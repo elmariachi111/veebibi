@@ -15,6 +15,9 @@ if (!process.env.NODB){
   var mongoskin = require('mongoskin')
   mongo = mongoskin.db(process.env.MONGOLAB_URI + "?auto_reconnect=true&poolSize=2", {w:1});
 }
+
+var CServices = new Services(mongo);
+
 var app = express();
 
 // all environments
@@ -41,13 +44,10 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/twitter-search', Services.twitterSearch);
-/*
+app.get('/twitter-search', CServices.twitterSearch.bind(CServices));
 
-*/
-
-app.get('/position', Services.positionForm);
-app.get('/findline', Services.findlines);
+//app.get('/position', Services.positionForm);
+app.get('/findlines', CServices.findlines.bind(CServices));
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

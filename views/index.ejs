@@ -3,8 +3,6 @@
      <div id="themap" style="position:absolute; z-position:2;"></div> 
  -->
 
-
-
         <div id="themap" style="position:absolute; z-index:2;"></div>
         <div class="push"></div>
 
@@ -28,21 +26,64 @@
     var gmap;
     var gpsSvc = new VB.BrowserLocation();
     var locator = new VB.StationLocator();
+    var colors = [
+    '#E8400C',
+    '#FFAB25',
+    '#FF0082',
+    '#830CE8',
+    '#0935FF'
+    ];
 
     function initialize() { //called back from google loader
         var mapOptions = {
-            center: new google.maps.LatLng(-34.397, 150.644),
-            zoom: 8,
+            center: new google.maps.LatLng(52.516012,13.418126),
+            zoom: 12,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
         gmap = new google.maps.Map(document.getElementById("themap"), mapOptions);
-
+        var polyLines = [];
+        var markers = [];
         google.maps.event.addListener(gmap, 'click', function(e) {
+            _.each(polyLines, function(pl) {
+                pl.setMap(null);
+                pl = null;
+            })
+            _.each(markers, function(m) {
+                m.setMap(null);
+                m = null;
+            })
             var latlng = { lat:e.latLng.lat(), lng: e.latLng.lng() };
-            locator.findStation(latlng, function(station) {
+            locator.findLines(latlng, function(lines) {
 
-                console.dir(station);
+                console.dir(lines);
+
+                var polyOptions = {
+                    strokeOpacity: 1.0,
+                    strokeWeight: 3
+                };
+                _.each(lines, function(line) {
+                    polyOptions.strokeColor = colors[_.random(colors.length)];
+                    var poly = new google.maps.Polyline(polyOptions);
+                    poly.vbbLine = line;
+                    google.maps.event.addListener(poly,'click', function(e) {
+                       alert(this.vbbLine.line);
+                    });
+                    polyLines.push(poly);
+                    poly.setMap(gmap);
+                    var path = poly.getPath();
+                    _.each(line.stations, function(station) {
+                        var latLng = new google.maps.LatLng(station.loc.lat, station.loc.lng);
+                        path.push(latLng);
+
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            map: gmap,
+                            title:"[" + line.line + "] " + station.name
+                        });
+
+                    });
+                });
             });
         });
 
