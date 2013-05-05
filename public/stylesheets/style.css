@@ -62,7 +62,7 @@ h1{
     0 20px 20px rgba(0,0,0,.15);
     font-size: 80px;
 }
-h3 {
+#theWell {
     color: #EEE;
 }
 
@@ -73,11 +73,6 @@ em {
     color: black;
     padding: 0 2px;
 }
-
-p{
-    color:#FFFFFF;
-}
-
 
 .thumbnails {
 
