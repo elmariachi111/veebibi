@@ -1,107 +1,133 @@
+<html>
+<head>
+    <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
 
+</head>
+
+<body>
 <!-- 
-     <div id="themap" style="position:absolute; z-position:2;"></div> 
- -->
+<div id="themap" style="position:absolute; z-position:2;"></div> 
+-->
+<div class="wrapper">
 
-        <div id="themap" style="position:absolute; z-index:2;"></div>
-        <div class="push"></div>
 
-        <div class="actions" style="position:absolute; z-index:20;top:40px;left:40px;width:200px;height:100px;">
-            <button id="geobutton" class="btn btn-primary">
-                getPosition
-            </button>
+    <!-- Modal -->
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">About us</h3>
         </div>
-
-        <div class="footer" style="position:absolute; z-index:1; bottom:20px;">
-            <p>
-                Copyright (c) 2013
-            </p>
+        <div class="modal-body">
+            <ul class="thumbnails">
+                <li class="span4">
+                    <div class="thumbnail">
+                        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/c20.19.246.246/s160x160/579788_10200908890110860_1755752658_n.jpg" class="image">
+                        <p>Alexander Hektor
+                            <br>(Backend Twitter-API)</p>
+                        <div class="btn-group">
+                            <button class="btn btn-mini btn-info">Facebook</button>
+                            <button class="btn btn-mini btn-success">LinkedIn</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="span4">
+                    <div class="thumbnail">
+                        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-frc1/c25.201.621.621/s160x160/482786_10151405175214582_1647178948_n.jpg" class="image">
+                        <p>Stefan Adolf
+                            <br>(Backend GTFS)</p>
+                        <div class="btn-group">
+                            <button class="btn btn-mini btn-info">Facebook</button>
+                            <button class="btn btn-mini btn-success">LinkedIn</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="span4">
+                    <div class="thumbnail">
+                        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/c314.2.462.462/s160x160/555034_10151523396209645_1918677458_n.jpg" class="image">
+                        <p>Gabriele Negro
+                            <br>(Frontend)</p>
+                        <div class="btn-group">
+                            <button class="btn btn-mini btn-info">Facebook</button>
+                            <button class="btn btn-mini btn-success">LinkedIn</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="span4">
+                    <div class="thumbnail">
+                        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc6/c30.30.372.372/s160x160/223371_195335187177029_3945726_n.jpg" class="image">
+                        <p>Robert Tochman-Szewc
+                            <br>(Backend GTFS)</p>
+                        <div class="btn-group">
+                            <button class="btn btn-mini btn-info">Facebook</button>
+                            <button class="btn btn-mini btn-success">LinkedIn</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="span4">
+                    <div class="thumbnail">
+                        <img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc6/s160x160/186467_523616364_720547435_n.jpg" class="image">
+                        <p>Zac Rosenbauer
+                            <br>(Backend Twitter-API)</p>
+                        <div class="btn-group">
+                            <button class="btn btn-mini btn-info">Facebook</button>
+                            <button class="btn btn-mini btn-success">LinkedIn</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Well done guys</button>
+        </div>
+    </div>
+
+
+    <div id="themap" style="position:absolute; z-index:1;"></div>
+
+    <div class="well" style="position:absolute; z-index:2;">
+        <div class="page-header">
+
+            <h1>
+                VeeBeBe <h3 style="margin-top:-5%;"><br>
+                Transport system: unrevealed, pocket-sized</h3>
+            </h1>
+        </div>
+        <p>
+            <em>City travel has never been that simple. </em><br><br>
+            It's nearly year 3000 and we still have to input some information manually to find out how to reach <br>destinations the smart way.
+            Whith VeeBeBe you can find nearby bus stops/stations and transport routes on the fly.
+            <br>Demistify the confusing traveling routes and visualize them now for better travel experience.
+
+        </p>
+        <a href='#' class='btn btn-block btn-large btn-danger'>CHECK OUT!</a>
+    </div>
+    <div class="push" ></div>
+</div>
+<div class="container-fluid" style="position:relative; z-index:3;">
+
+
+
+
+    <p style="color:#FFFFFF;">
+        © VeeBeBe 2013 | <a href="#myModal" data-toggle="modal">About us</a>
+    </p>
+</div>
+
+
+
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-x0JdV9GE1C39uo8cmI-LZ4vS5tuMZRM&amp;sensor=true">
-</script>
-
-<script type="text/javascript">
-
-    var gmap;
-    var gpsSvc = new VB.BrowserLocation();
-    var locator = new VB.StationLocator();
-    var colors = [
-    '#E8400C',
-    '#FFAB25',
-    '#FF0082',
-    '#830CE8',
-    '#0935FF'
-    ];
-
-    function initialize() { //called back from google loader
+</script><script type="text/javascript">
+    function initialize() {
         var mapOptions = {
-            center: new google.maps.LatLng(52.516012,13.418126),
-            zoom: 12,
+            center: new google.maps.LatLng(-34.397, 150.644),
+            zoom: 8,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-
-        gmap = new google.maps.Map(document.getElementById("themap"), mapOptions);
-        var polyLines = [];
-        var markers = [];
-        google.maps.event.addListener(gmap, 'click', function(e) {
-            _.each(polyLines, function(pl) {
-                pl.setMap(null);
-                pl = null;
-            })
-            _.each(markers, function(m) {
-                m.setMap(null);
-                m = null;
-            })
-            var latlng = { lat:e.latLng.lat(), lng: e.latLng.lng() };
-            locator.findLines(latlng, function(lines) {
-
-                console.dir(lines);
-
-                var polyOptions = {
-                    strokeOpacity: 1.0,
-                    strokeWeight: 3
-                };
-                _.each(lines, function(line) {
-                    polyOptions.strokeColor = colors[_.random(colors.length)];
-                    var poly = new google.maps.Polyline(polyOptions);
-                    poly.vbbLine = line;
-                    google.maps.event.addListener(poly,'click', function(e) {
-                       alert(this.vbbLine.line);
-                    });
-                    polyLines.push(poly);
-                    poly.setMap(gmap);
-                    var path = poly.getPath();
-                    _.each(line.stations, function(station) {
-                        var latLng = new google.maps.LatLng(station.loc.lat, station.loc.lng);
-                        path.push(latLng);
-
-                        var marker = new google.maps.Marker({
-                            position: latLng,
-                            map: gmap,
-                            title:"[" + line.line + "] " + station.name
-                        });
-
-                    });
-                });
-            });
-        });
-
+        var map = new google.maps.Map(document.getElementById("themap"), mapOptions);
     }
-
     google.maps.event.addDomListener(window, 'load', initialize);
-
-$( function() {
-    var disable;
-    $('#geobutton').on('click', function(evt) {
-        gpsSvc.getNavigatorLocation(function(pos) {
-            var gmPos = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-            gmap.setCenter(gmPos);
-
-            //$('#posResult').html(latlng.lat + " " + latlng.lng );
-        })
-    });
-});
-
-
 </script>
+</body>
+</html>

@@ -4,28 +4,104 @@
         <title>
             <%= title %>
         </title>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/1.2.1/lodash.underscore.min.js"></script>
-
-        <script type="text/javascript" src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/veebibi.js"></script>
-
-        <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' type="text/css">
         <link rel='stylesheet' href='/stylesheets/style.css' type="text/css">
-
+        <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' type="text/css">
+        <link rel='stylesheet' href='/stylesheets/ribbon.css' type="text/css">
+        <script type="text/javascript" src="js/bootstrap.min.js">
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="/js/bootstrap.min.js" type="text/javascript">
+        </script>
         <style type="text/css">
 
-        .container-fluid {
-        background: rgba(0, 0, 0, 0);
+        * {
+        margin: 0;
         }
-        .container-fluid .page-header {
-        background: rgba(0, 0, 0, 0);
+        html, body {
+        font-family: 'Yanone Kaffeesatz', sans-serif;
+        font-size: 1em;
+        height: 100%;
+        -webkit-font-smoothing: antialiased;
         }
-        .container-fluid p {
-        background: rgba(0, 0, 0, 0);
+
+        a:hover { background-color:white; text-decoration:none;  }
+
+        .wrapper {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        margin: 0 auto -2em;
         }
+        .container-fluid, .push {
+        background: rgba(18, 22, 17, 0.74902);
+        height: 1em;
+        padding: 0.5%;
+        }
+        .well {
+        margin:70px;
+        background: rgba(11, 11, 11, 0.5);
+        width: auto;
+        height: auto;
+        color: #222;
+        -webkit-font-smoothing: antialiased;
+        }
+
+        h1{
+        color:#FFFFFF;
+        text-shadow:   0 1px 0 #ccc,
+                       0 2px 0 #c9c9c9,
+                       0 3px 0 #bbb,
+                       0 4px 0 #b9b9b9,
+                       0 5px 0 #aaa,
+                       0 6px 1px rgba(0,0,0,.1),
+                       0 0 5px rgba(0,0,0,.1),
+                       0 1px 3px rgba(0,0,0,.3),
+                       0 3px 5px rgba(0,0,0,.2),
+                       0 5px 10px rgba(0,0,0,.25),
+                       0 10px 10px rgba(0,0,0,.2),
+                       0 20px 20px rgba(0,0,0,.15);
+        }
+
+        em {
+        font-weight: bold;
+        font-style: normal;
+        background-color: white;
+        color: black;
+        padding: 0 2px;
+        }
+
+        p{
+        color:#FFFFFF;
+        }
+        
+
+.thumbnails {
+  width: 471px;
+  height: 784px;
+}
+.thumbnails .span4 {
+  width: 200px;
+}
+.thumbnails .span4 .thumbnail p {
+  text-align: center;
+  color:black;
+}
+.thumbnails .span4 .thumbnail .btn-group .btn-info {
+  background: #5b86de;
+}
+.thumbnails .span4 .thumbnail .btn-group .btn-success {
+  background: #c34646;
+}
+
+.modal-body {
+    max-height: 700px;
+
+}
+
         </style>
+    </head>
     <body>
-<%- body %>
-</body>
+        <%- body %>
+    </body>
 </html>
