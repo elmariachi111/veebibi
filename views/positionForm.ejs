@@ -1,4 +1,4 @@
-<button id="geobutton">
+<button id="geobutton" class="btn btn-primary">
 getPosition
 </button>
 
@@ -6,13 +6,16 @@ getPosition
 
         <div> Heloo </div>
 <script type="text/javascript">
-    var loc = new VB.BrowserLocation();
+    var gpsSvc = new VB.BrowserLocation();
+    var locator = new VB.StationLocator();
 
     $( function() {
+        var disable;
         $('#geobutton').on('click', function(evt) {
-            loc.getNavigatorLocation(function(pos) {
+            gpsSvc.getNavigatorLocation(function(pos) {
                 var latlng = { lat:pos.coords.latitude, lng: pos.coords.longitude };
-                $('#posResult').html(latlng.lat + " " + latlng.lng );
+                locator.findStation(latlng);
+                //$('#posResult').html(latlng.lat + " " + latlng.lng );
             })
         });
 

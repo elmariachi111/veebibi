@@ -17,6 +17,20 @@ exports.twitterSearch = function(req, res) {
     });
 }
 
+exports.findlines = function(req, res) {
+
+    var geoPos = {
+        lat: req.param('lat'),
+        lng: req.param('lng')
+    };
+
+    res.json( {
+        name:'metro 2033',
+        type:'station',
+        geo: geoPos
+    });
+
+}
 
 exports.positionForm = function(req,res) {
     res.render("positionForm", {title:"schniepel"});

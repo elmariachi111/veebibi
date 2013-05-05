@@ -29,3 +29,7 @@ a {
     top:0;
     left:0;
 }
+
+#themap img {
+    max-width: none;
+}

@@ -17,3 +17,17 @@ VB.BrowserLocation.prototype = {
     }
 
 };
+
+VB.StationLocator = function() {
+
+
+}
+
+VB.StationLocator.prototype = {
+
+    findStation: function(jsLatLng, callback) {
+        $.get('/findline', jsLatLng, function(resp) {
+            callback(resp);
+        });
+    }
+}

@@ -8,12 +8,4 @@ exports.index = function(req, res){
 
 };
 
-exports.position = function(req, res) {
-
-    var lat = req.param('lat');
-    var lng = req.param('lng');
-
-    res.send("nothing found" );
-
-}
 
