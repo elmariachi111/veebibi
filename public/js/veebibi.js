@@ -38,6 +38,7 @@ VB.Frontend = function (gmap) {
     this.markers = [];
     this.$backdrop = $('#mega-backdrop');
     this.$indicator = $('#loading-indicator');
+    this.$flag = $('#flag')
 
 }
 
@@ -57,7 +58,15 @@ VB.Frontend.prototype = {
 
         google.maps.event.addListener(this.gmap, 'click', this.onMapClicked.bind(this));
         this.locator = new VB.StationLocator();
+    },
+    showFlag: function(marker, content, event) {
+        this.$flag.html(content);
+        this.$flag.removeClass('hide');
+  //      this.$flag.offset({top:event.pixel.y,left:event.pixel.x});
 
+    },
+    hideFlag: function() {
+        this.$flag.addClass('hide');
     },
     createMarker: function(latLng, color,  line, station) {
         var marker = new google.maps.Marker({
@@ -68,15 +77,20 @@ VB.Frontend.prototype = {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 3,
                 strokeColor: color
-            },
-            title:"[" + line.line + "] " + station.name
+            }
         });
+        this.markers.push(marker);
+
+        var content = "[" + line.line + "] " + station.name;
+        google.maps.event.addListener(marker, 'mouseover', this.showFlag.bind(this,this.marker, content));
+        google.maps.event.addListener(marker, 'mouseout', this.hideFlag.bind(this));
+
         return marker;
      },
      onMapClicked: function(e) {
          this.$backdrop.removeClass("hide");
          this.$indicator.removeClass("hide");
-        _.each(this.polyLines, function(pl) {
+         _.each(this.polyLines, function(pl) {
             pl.setMap(null);
             pl = null;
         });
@@ -84,6 +98,8 @@ VB.Frontend.prototype = {
             m.setMap(null);
             m = null;
         });
+         this.markers.length = [];
+
         var self = this;
 
         var latlng = { lat:e.latLng.lat(), lng: e.latLng.lng() };

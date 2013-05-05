@@ -115,3 +115,16 @@ p{
     height: 100%;
     margin-top: 20%;
 }
+
+#flag {
+    position:fixed;
+    width:180px;
+    overflow:hidden;
+    height:50px;
+    background-color:white;
+    padding:5px;
+    bottom:50px;
+    right:20px;
+    box-shadow: 1px 1px 2px;
+    z-index:50;
+}
