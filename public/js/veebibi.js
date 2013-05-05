@@ -57,12 +57,20 @@ VB.Frontend.COLORS =  [
 ];
 VB.Frontend.prototype = {
     start: function(gmPos) {
+
         this.$backdrop.addClass("hide");
         this.gmap.setCenter(gmPos);
         this.gmap.setZoom(16);
 
+        var marker = new google.maps.Marker({
+            position: gmPos,
+            map: this.gmap,
+            animation: google.maps.Animation.DROP
+        });
+
         google.maps.event.addListener(this.gmap, 'click', this.onMapClicked.bind(this));
         this.locator = new VB.StationLocator();
+        this.onMapClicked({latLng:gmPos});
     },
     showFlag: function(marker, content, event) {
         this.$flag.html(content);
