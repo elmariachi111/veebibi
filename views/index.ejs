@@ -125,6 +125,19 @@
             '#830CE8',
             '#0935FF'
         ];
+        var createMarker = function(latLng, color) {
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: gmap,
+                flat:true,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 3,
+                    strokeColor: color
+                },
+                title:"[" + line.line + "] " + station.name
+            });
+        };
 
         var onMapClicked = function(e) {
             _.each(polyLines, function(pl) {
@@ -158,18 +171,7 @@
                     _.each(line.stations, function(station) {
                         var latLng = new google.maps.LatLng(station.loc.lat, station.loc.lng);
                         path.push(latLng);
-
-                        var marker = new google.maps.Marker({
-                            position: latLng,
-                            map: gmap,
-                            flat:true,
-                            icon: {
-                                path: google.maps.SymbolPath.CIRCLE,
-                                scale: 3,
-                                strokeColor: polyOptions.strokeColor
-                            },
-                            title:"[" + line.line + "] " + station.name
-                        });
+                        createMarker(latLng, polyOptions.strokeColor);
 
                     });
                 });
