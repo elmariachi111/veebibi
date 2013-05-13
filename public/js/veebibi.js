@@ -2,15 +2,26 @@
 var VB = {};
 
 VB.BrowserLocation = function() {
-
+    this.DEFAULT_LOCATION = {
+        coords: {
+            latitude: 52.516012,
+            longitude: 13.418126      
+        }
+    }
 }
 
 VB.BrowserLocation.prototype = {
 
     getNavigatorLocation: function(callback) {
+        var self = this;
         navigator.geolocation.getCurrentPosition(
-            callback,
-            function() { console.log("error"); callback(null); },
+            function(coords) {
+                if (typeof coords == "undefined")
+                    return callback(self.DEFAULT_LOCATION);
+                else
+                    return callback(coords);
+            },
+            function() { console.log("error"); callback(self.DEFAULT_LOCATION); },
             {'enableHighAccuracy':true,'timeout':10000,'maximumAge':0}
         );
         return true;
